@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {% if action == 'create' %}Criar post{% else %}Editar post{% endif %}
+{% endblock %}
+
+{% block content %}
+    <h2>
+        {% if action == 'create' %}Criar novo post{% else %}Editar post{% endif %}
+    </h2>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <p>
+            <label for="id_title">Título:</label><br>
+            <input type="text" id="id_title" name="title"
+                   value="{% if post %}{{ post.title }}{% endif %}">
+        </p>
+
+        <p>
+            <label for="id_content">Conteúdo (HTML permitido):</label><br>
+            <textarea id="id_content" name="content" rows="10" cols="60">{% if post %}{{ post.content }}{% endif %}</textarea>
+        </p>
+
+        <button type="submit">
+            {% if action == 'create' %}Criar{% else %}Salvar alterações{% endif %}
+        </button>
+    </form>
+
+    <p><a href="{% url 'post-list' %}">Voltar à lista</a></p>
+{% endblock %}

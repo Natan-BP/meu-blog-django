@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Meu Blog{% endblock %}</title>
+</head>
+
+<body>
+    <header>
+        <h1><a href="{% url 'post-list' %}">Meu Blog</a></h1>
+        <nav>
+            <a href="{% url 'post-create' %}">Criar novo post</a>
+        </nav>
+        <hr>
+    </header>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer>
+        <hr>
+        <small>CRUD com Django</small>
+    </footer>
+</body>
+</html>
