@@ -9,7 +9,9 @@
     <header>
         <h1><a href="{% url 'post-list' %}">Meu Blog</a></h1>
         <nav>
-            <a href="{% url 'post-create' %}">Criar novo post</a>
+            <a href="{% url 'post-list' %}">Posts</a> |
+            <a href="{% url 'post-create' %}">Novo Post</a> |
+            <a href="{% url 'category-list' %}">Categorias</a>
         </nav>
         <hr>
     </header>

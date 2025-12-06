@@ -14,9 +14,48 @@
 
 <hr>
 
+{% if post.categories.all %}
+<section>
+    <h4>Categorias:</h4>
+    <ul>
+        {% for category in post.categories.all %}
+            <li>
+                <a href="{% url 'category-detail' category.pk %}">
+                    {{ category.name }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+</section>
+<hr>
+{% endif %}
+
 <p>
     <a href="{% url 'post-update' post.pk %}">Editar</a> |
     <a href="{% url 'post-delete' post.pk %}">Remover</a> |
     <a href="{% url 'post-list' %}">Voltar à lista</a>
 </p>
+
+<hr>
+
+<section>
+    <h3>Comentários</h3>
+
+    <ul>
+        {% for comment in post.comments.all %}
+            <li>
+                <p>{{ comment.text }}</p>
+                <small>
+                    por {{ comment.author }} em {{ comment.created_at|date:"d/m/Y H:i" }}
+                </small>
+            </li>
+        {% empty %}
+            <p>Não há comentários ainda.</p>
+        {% endfor %}
+    </ul>
+
+    <p>
+        <a href="{% url 'comment-create' post.pk %}">Adicionar comentário</a>
+    </p>
+</section>
 {% endblock %}

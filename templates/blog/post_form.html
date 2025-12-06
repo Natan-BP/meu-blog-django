@@ -11,17 +11,7 @@
 
     <form method="post">
         {% csrf_token %}
-
-        <p>
-            <label for="id_title">Título:</label><br>
-            <input type="text" id="id_title" name="title"
-                   value="{% if post %}{{ post.title }}{% endif %}">
-        </p>
-
-        <p>
-            <label for="id_content">Conteúdo (HTML permitido):</label><br>
-            <textarea id="id_content" name="content" rows="10" cols="60">{% if post %}{{ post.content }}{% endif %}</textarea>
-        </p>
+        {{ form.as_p }}
 
         <button type="submit">
             {% if action == 'create' %}Criar{% else %}Salvar alterações{% endif %}
