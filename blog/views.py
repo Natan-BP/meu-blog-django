@@ -13,12 +13,17 @@ class PostListView(ListView):
     context_object_name = 'posts'
     ordering = ['-created_at']
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = Category.objects.all()
+        return context
+
 
 class PostDetailView(DetailView):
     model = Post
     template_name = 'blog/post_detail.html'
     context_object_name = 'post'
-
+    
 
 class PostCreateView(CreateView):
     model = Post
@@ -36,7 +41,6 @@ class PostUpdateView(UpdateView):
 
     def get_success_url(self):
         return reverse_lazy('post-detail', kwargs={'pk': self.object.pk})
-
 
 class PostDeleteView(DeleteView):
     model = Post

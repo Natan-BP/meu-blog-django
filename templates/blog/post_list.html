@@ -1,24 +1,142 @@
 {% extends 'base.html' %}
-
-{% block title %}Lista de posts{% endblock %}
+{% load static %}
+{% block title %}Painel de Ordens Imperiais{% endblock %}
 
 {% block content %}
-<h2>Posts</h2>
+<div class="imperial-layout">
+  <!-- Sidebar -->
+  <aside class="imperial-sidebar">
 
-{% if posts %}
-    <ul>
-    {% for post in posts %}
-        <li>
-            <a href="{% url 'post-detail' post.pk %}">
-                {{ post.title }}
-            </a>
-            <small> — {{ post.created_at|date:"d/m/Y H:i" }}</small>
+    <!-- Categorias -->
+    <div class="imperial-card" style="margin-bottom: 12px">
+      <h3 class="sidebar-title">Categorias</h3>
+      <ul class="sidebar-category-list">
+        {% for category in categories %}
+        <li class="sidebar-category-item">
+          <a
+            href="{% url 'category-detail' category.pk %}"
+            class="sidebar-category-link"
+          >
+            <span>{{ category.name }}</span>
+          </a>
         </li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>Não há posts cadastrados ainda.</p>
-{% endif %}
+        {% empty %}
+        <li class="sidebar-category-item">
+          <span class="sidebar-category-link">Nenhuma categoria cadastrada.</span>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
 
-<p><a href="{% url 'post-create' %}">Criar novo post</a></p>
+    <!-- Status da Base -->
+    <div class="imperial-card">
+      <h3 class="sidebar-title">Status da Base</h3>
+
+      <div class="sidebar-status-row">
+        <span>Nível de Alerta</span>
+        <span class="sidebar-status-highlight">MÉDIO</span>
+      </div>
+
+      <div class="sidebar-status-row">
+        <span>Troopers Ativos</span>
+        <span class="sidebar-status-highlight">2.847</span>
+      </div>
+
+      <div class="sidebar-status-row">
+        <span>Precisão Média</span>
+        <span class="sidebar-status-highlight" style="color: var(--muted)">
+          4%
+        </span>
+      </div>
+
+      <p
+        style="
+          margin-top: 10px;
+          font-size: 0.75rem;
+          color: var(--muted);
+          font-style: italic;
+          border-top: 1px solid var(--border);
+          padding-top: 6px;
+        "
+      >
+        "Mantenham a mira. Por favor."
+      </p>
+    </div>
+
+    <!-- 📌 Pôster imperial -->
+    <div class="imperial-card" style="margin-top: 12px; padding: 0; overflow:hidden;">
+      <img
+        src="{% static 'img/imperial_propaganda.png' %}"
+        alt="Propaganda do império"
+        style="width: 100%; display:block;"
+      />
+      <p
+        style="
+          padding: 8px 10px 10px 10px;
+          font-size:0.75rem;
+          color:var(--muted);
+          text-align:center;
+          font-style:italic;
+          border-top:1px solid var(--border);
+        "
+      >
+        “Join the imperial army!”
+      </p>
+    </div>
+
+  </aside>
+
+  <!-- Lista de Posts -->
+  <section>
+    <div class="imperial-card">
+      <div class="directive-header-row">
+        <div>
+          <div class="directive-title">Ordens Imperiais</div>
+          <div class="directive-subtitle">
+            Comunicados, tarefas e avisos para todos os stormtroopers.
+          </div>
+        </div>
+        <a href="{% url 'post-create' %}" class="directive-more-link">
+          + Nova ordem
+        </a>
+      </div>
+
+      <div class="directive-grid">
+        {% for post in posts %}
+        <article class="directive-card">
+          <div class="directive-card-header">
+            <span class="directive-category-pill">
+              {% if post.categories.all %}
+                {% for c in post.categories.all %}
+                  {{ c.name }}{% if not forloop.last %} • {% endif %}
+                {% endfor %}
+              {% else %}
+                Aviso Geral
+              {% endif %}
+            </span>
+
+            <span class="directive-date">
+              {{ post.created_at|date:"d/m/Y H:i" }}
+            </span>
+          </div>
+
+          <a href="{% url 'post-detail' post.pk %}" class="directive-title-link">
+            {{ post.title }}
+          </a>
+
+          <p class="directive-summary">
+            {{ post.content|striptags|truncatechars:150 }}
+          </p>
+
+          <a href="{% url 'post-detail' post.pk %}" class="directive-more-link">
+            Ver detalhes
+          </a>
+        </article>
+        {% empty %}
+        <p>Nenhuma ordem registrada ainda.</p>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+</div>
 {% endblock %}

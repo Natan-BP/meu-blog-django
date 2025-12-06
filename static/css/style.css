@@ -1,0 +1,432 @@
+/* static/css/style.css */
+
+/* ---------- Tema base ---------- */
+:root {
+  --bg: #050608;
+  --bg-elevated: #101218;
+  --bg-card: #141722;
+  --bg-accent: #1a1d2a;
+  --fg: #f5f5f5;
+  --muted: #9ca3af;
+  --border: #272a36;
+  --primary: #ef4444;          /* vermelho imperial */
+  --primary-soft: rgba(239, 68, 68, 0.08);
+  --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.6);
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --font-display: "Orbitron", system-ui, sans-serif;
+  --font-body: "Rajdhani", system-ui, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+}
+
+/* ---------- Layout geral ---------- */
+
+.imperial-header-line-top,
+.imperial-footer-line-bottom {
+  height: 2px;
+  width: 100%;
+  background-image: linear-gradient(
+    90deg,
+    transparent,
+    var(--primary),
+    transparent
+  );
+}
+
+header,
+footer {
+  background-color: #050608dd;
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+
+.imperial-header {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+}
+
+.imperial-logo-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.imperial-logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  box-shadow: 0 0 18px rgba(239, 68, 68, 0.7);
+}
+
+.imperial-title {
+  display: flex;
+  flex-direction: column;
+}
+
+.imperial-title-main {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+}
+
+.imperial-title-sub {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+/* nav */
+
+.imperial-nav {
+  display: flex;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+}
+
+.imperial-nav a {
+  color: var(--muted);
+  text-decoration: none;
+  padding: 6px 10px;
+  border-radius: 999px;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+.imperial-nav a:hover {
+  color: var(--fg);
+  background-color: rgba(239, 68, 68, 0.16);
+}
+
+/* botão principal */
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  border: none;
+  background: linear-gradient(135deg, #f97373, #ef4444);
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  cursor: pointer;
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.6);
+}
+
+.btn-primary a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.btn-primary:hover {
+  filter: brightness(1.05);
+}
+
+/* ---------- Main container ---------- */
+
+.imperial-main {
+  max-width: 1100px;
+  margin: 24px auto 40px auto;
+  padding: 0 16px;
+}
+
+.imperial-layout {
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  gap: 20px;
+}
+
+@media (max-width: 900px) {
+  .imperial-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .imperial-sidebar {
+    order: 2;
+  }
+}
+
+/* ---------- Sidebar ---------- */
+
+.imperial-sidebar {
+  position: sticky;
+  top: 90px;
+  align-self: start;
+}
+
+.imperial-card {
+  background-color: var(--bg-card);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  padding: 14px 14px 16px 14px;
+  box-shadow: var(--shadow-soft);
+}
+
+/* categorias na sidebar */
+
+.sidebar-title {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--primary);
+  margin-bottom: 10px;
+}
+
+.sidebar-category-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-category-item {
+  margin-bottom: 4px;
+}
+
+.sidebar-category-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  width: 100%;
+  padding: 6px 8px;
+  background-color: transparent;
+  border-radius: 999px;
+  border: none;
+  color: var(--muted);
+  text-align: left;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 0.85rem;
+}
+
+.sidebar-category-link:hover {
+  background-color: var(--bg-accent);
+  color: var(--fg);
+}
+
+/* status da base */
+
+.sidebar-status-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.82rem;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.sidebar-status-highlight {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  color: var(--primary);
+}
+
+/* ---------- Lista de posts ---------- */
+
+.directive-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.directive-title {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+}
+
+.directive-subtitle {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.directive-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* card de post */
+
+.directive-card {
+  background-color: var(--bg-card);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  padding: 12px 14px;
+  box-shadow: var(--shadow-soft);
+  transition: border-color 0.15s ease, transform 0.15s ease,
+    box-shadow 0.15s ease, background-color 0.15s ease;
+}
+
+.directive-card:hover {
+  border-color: var(--primary);
+  background-color: var(--bg-accent);
+  transform: translateY(-1px);
+  box-shadow: 0 0 22px rgba(239, 68, 68, 0.25);
+}
+
+.directive-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.directive-category-pill {
+  font-family: var(--font-display);
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--primary);
+  background-color: var(--primary-soft);
+  padding: 3px 7px;
+  border-radius: 999px;
+}
+
+.directive-date {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.directive-title-link {
+  display: inline-block;
+  margin-top: 4px;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  text-decoration: none;
+  color: var(--fg);
+}
+
+.directive-title-link:hover {
+  color: var(--primary);
+}
+
+.directive-summary {
+  margin-top: 6px;
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.directive-more-link {
+  font-size: 0.8rem;
+  text-decoration: none;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+}
+
+/* ---------- Detalhe do post ---------- */
+
+.post-detail-meta {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+
+.post-detail-categories {
+  margin: 10px 0 14px 0;
+  font-size: 0.8rem;
+}
+
+.post-detail-categories a {
+  color: var(--primary);
+  text-decoration: none;
+  margin-right: 6px;
+}
+
+.post-detail-body p {
+  margin-bottom: 10px;
+}
+
+/* ---------- Comentários ---------- */
+
+.comments-section {
+  margin-top: 24px;
+}
+
+.comments-section h3 {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+}
+
+.comment-item {
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-radius: var(--radius-md);
+  background-color: var(--bg-card);
+  border: 1px solid var(--border);
+}
+
+.comment-meta {
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
+/* ---------- Footer ---------- */
+
+.imperial-footer {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 16px 20px 20px 20px;
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+input[type="text"],
+input[type="datetime-local"],
+textarea,
+select {
+  width: 100%;
+  padding: 7px 9px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background-color: var(--bg-elevated);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+}
+
+textarea {
+  min-height: 160px;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 1px rgba(239, 68, 68, 0.5);
+}

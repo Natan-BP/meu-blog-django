@@ -1,15 +1,66 @@
 {% extends 'base.html' %}
-
-{% block title %}Novo comentário{% endblock %}
+{% load static %}
+{% block title %}Adicionar Comentário{% endblock %}
 
 {% block content %}
-  <h2>Novo comentário em: "{{ post.title }}"</h2>
+<div class="imperial-card" style="max-width: 600px; margin: 0 auto;">
 
-  <form method="post">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit">Enviar comentário</button>
+  <h2 class="directive-title" style="margin-bottom: 12px;">
+    Registrar Comentário
+  </h2>
+
+  <p class="directive-subtitle" style="margin-bottom: 18px;">
+    Feedback obrigatório para manter o Império informado.
+  </p>
+
+  <form method="post" class="imperial-form">
+    {% csrf_token %}
+
+    <div class="form-group">
+      {{ form.text.label_tag }}
+      {{ form.text }}
+    </div>
+
+    <button type="submit" class="directive-more-link" style="margin-top: 14px;">
+      Enviar comentário ao Comando
+    </button>
   </form>
 
-  <p><a href="{% url 'post-detail' post.pk %}">Voltar para o post</a></p>
+  <hr style="margin: 18px 0; border:none; border-top:1px solid var(--border);">
+
+  <a href="{{ request.META.HTTP_REFERER }}" class="directive-more-link">
+    Voltar
+  </a>
+</div>
+
+
+<style>
+  /* Ajustes no visual do Django form */
+  .imperial-form textarea,
+  .imperial-form input[type="text"] {
+    width: 100%;
+    background-color: var(--card);
+    border: 1px solid var(--border);
+    color: var(--foreground);
+    padding: 10px;
+    border-radius: var(--radius);
+    font-family: var(--font-body);
+  }
+
+  .imperial-form textarea:focus {
+    outline: none;
+    border-color: hsl(var(--primary));
+    box-shadow: 0 0 10px hsl(var(--primary) / 0.4);
+  }
+
+  label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 0.85rem;
+    color: var(--muted-foreground);
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+</style>
 {% endblock %}

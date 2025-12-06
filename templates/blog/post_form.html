@@ -1,22 +1,127 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}
-    {% if action == 'create' %}Criar post{% else %}Editar post{% endif %}
+  {% if form.instance.pk %}
+    Editar Ordem Imperial
+  {% else %}
+    Nova Ordem Imperial
+  {% endif %}
 {% endblock %}
 
 {% block content %}
-    <h2>
-        {% if action == 'create' %}Criar novo post{% else %}Editar post{% endif %}
-    </h2>
+<div class="imperial-card" style="max-width: 700px; margin: 0 auto;">
 
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
+  <h2 class="directive-title" style="margin-bottom: 10px;">
+    {% if form.instance.pk %}
+      Editar Ordem Imperial
+    {% else %}
+      Nova Ordem Imperial
+    {% endif %}
+  </h2>
 
-        <button type="submit">
-            {% if action == 'create' %}Criar{% else %}Salvar alterações{% endif %}
-        </button>
-    </form>
+  <p class="directive-subtitle" style="margin-bottom: 18px;">
+    Preencha os dados abaixo e envie um novo comando ao Império.
+  </p>
 
-    <p><a href="{% url 'post-list' %}">Voltar à lista</a></p>
+  <form method="post">
+    {% csrf_token %}
+
+    {% for field in form %}
+      <div style="margin-bottom: 18px;">
+        
+        <!-- Labels estilizados -->
+        <label
+          for="{{ field.id_for_label }}"
+          style="display:block;
+                 font-family:var(--font-display);
+                 font-size:0.75rem;
+                 text-transform:uppercase;
+                 letter-spacing:0.17em;
+                 color:var(--muted-foreground);
+                 margin-bottom:6px;">
+          {{ field.label }}
+        </label>
+
+        <!-- Campos com visual Imperial -->
+        <div class="imperial-form-field">
+          {{ field }}
+        </div>
+
+        <!-- Descrição opcional -->
+        {% if field.help_text %}
+          <small style="font-size:0.7rem; color:var(--muted);">
+            {{ field.help_text|safe }}
+          </small>
+        {% endif %}
+
+        <!-- Erros -->
+        {% for error in field.errors %}
+          <div style="color:hsl(var(--primary)); font-size:0.75rem;">
+            ⚠ {{ error }}
+          </div>
+        {% endfor %}
+      </div>
+    {% endfor %}
+
+    <!-- AÇÕES -->
+    <div style="display:flex; gap:10px; margin-top: 22px;">
+      <button type="submit" class="directive-more-link">
+        {% if form.instance.pk %}
+          ✔ Salvar Ordem
+        {% else %}
+          🚀 Publicar Ordem
+        {% endif %}
+      </button>
+
+      <a href="{% url 'post-list' %}" class="directive-more-link">
+        Cancelar
+      </a>
+    </div>
+
+  </form>
+</div>
+
+<style>
+  /* ✨ Ajuste visual UNIVERSAL dos inputs */
+  .imperial-form-field textarea,
+  .imperial-form-field input[type="text"],
+  .imperial-form-field select {
+    width: 100%;
+    background-color: var(--card);
+    border: 1px solid var(--border);
+    padding: 10px;
+    border-radius: var(--radius);
+    color: var(--foreground);
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+  }
+
+  .imperial-form-field textarea:focus,
+  .imperial-form-field input[type="text"]:focus,
+  .imperial-form-field select:focus {
+    outline: none;
+    border-color: hsl(var(--primary));
+    box-shadow: 0 0 12px hsl(var(--primary) / 0.5);
+  }
+
+  /* Checkbox Imperial */
+  ul {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  input[type="checkbox"] {
+    accent-color: hsl(var(--primary));
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+  }
+
+  ul label {
+    margin-left: 6px;
+    font-size: 0.85rem;
+    cursor: pointer;
+  }
+</style>
 {% endblock %}

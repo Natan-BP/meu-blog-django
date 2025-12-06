@@ -1,15 +1,28 @@
 {% extends 'base.html' %}
-
-{% block title %}Remover post{% endblock %}
+{% block title %}Confirmar Remoção{% endblock %}
 
 {% block content %}
-    <h2>Remover post</h2>
+<div class="imperial-card">
+  <h2 class="directive-title" style="margin-bottom: 10px;">
+    Confirmar Remoção de Ordem
+  </h2>
+  <p class="directive-subtitle" style="margin-bottom: 16px; color:#fca5a5;">
+    Essa ação é irreversível. A ordem será removida do mural imperial.
+  </p>
 
-    <p>Tem certeza que deseja remover o post <strong>"{{ post.title }}"</strong>?</p>
+  <p style="margin-bottom: 16px;">
+    Tem certeza de que deseja remover a ordem:
+    <strong>"{{ object.title }}"</strong>?
+  </p>
 
-    <form method="post">
-        {% csrf_token %}
-        <button type="submit">Sim, remover</button>
-        <a href="{% url 'post-detail' post.pk %}">Cancelar</a>
-    </form>
+  <form method="post" style="display:flex; gap:8px; align-items:center;">
+    {% csrf_token %}
+    <button type="submit" class="btn-primary" style="background:linear-gradient(135deg,#b91c1c,#7f1d1d);">
+      Remover definitivamente
+    </button>
+    <a href="{% url 'post-detail' object.pk %}" class="directive-more-link">
+      Cancelar
+    </a>
+  </form>
+</div>
 {% endblock %}

@@ -1,22 +1,73 @@
 {% extends 'base.html' %}
-{% block title %}{{ category.name }}{% endblock %}
+{% block title %}Categoria: {{ category.name }}{% endblock %}
 
 {% block content %}
-<h2>{{ category.name }}</h2>
-<p>{{ category.description }}</p>
+<div class="imperial-card" style="margin-bottom: 12px;">
+  <h2 class="directive-title" style="margin-bottom: 6px;">
+    Categoria: {{ category.name }}
+  </h2>
 
-<h3>Posts dessa categoria:</h3>
-<ul>
-    {% for post in category.posts.all %}
-        <li>
-            <a href="{% url 'post-detail' post.pk %}">
-                {{ post.title }}
-            </a>
-        </li>
+  {% if category.description %}
+  <p class="directive-subtitle">
+    {{ category.description }}
+  </p>
+  {% else %}
+  <p class="directive-subtitle">
+    Ordens associadas a esta categoria específica do Império.
+  </p>
+  {% endif %}
+</div>
+
+<div class="imperial-card">
+  <div class="directive-header-row">
+    <div>
+      <div class="directive-title">
+        Ordens em "{{ category.name }}"
+      </div>
+      <div class="directive-subtitle">
+        Todas as ordens imperiais vinculadas a esta categoria.
+      </div>
+    </div>
+    <a href="{% url 'post-list' %}" class="directive-more-link">
+      Voltar ao painel
+    </a>
+  </div>
+
+  <div class="directive-grid">
+    {% for post in category.post_set.all %}
+    <article class="directive-card">
+      <div class="directive-card-header">
+        <span class="directive-category-pill">
+          {{ category.name }}
+        </span>
+        <span class="directive-date">
+          {{ post.created_at|date:"d/m/Y H:i" }}
+        </span>
+      </div>
+
+      <a
+        href="{% url 'post-detail' post.pk %}"
+        class="directive-title-link"
+      >
+        {{ post.title }}
+      </a>
+
+      <p class="directive-summary">
+        {{ post.content|striptags|truncatechars:150 }}
+      </p>
+
+      <a
+        href="{% url 'post-detail' post.pk %}"
+        class="directive-more-link"
+      >
+        Ver detalhes
+      </a>
+    </article>
     {% empty %}
-        <p>Nenhum post nessa categoria.</p>
+    <p>
+      Nenhuma ordem está vinculada a esta categoria ainda.
+    </p>
     {% endfor %}
-</ul>
-
-<a href="{% url 'category-list' %}">Voltar às categorias</a>
+  </div>
+</div>
 {% endblock %}

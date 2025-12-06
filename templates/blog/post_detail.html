@@ -3,59 +3,79 @@
 {% block title %}{{ post.title }}{% endblock %}
 
 {% block content %}
-<article>
-    <h2>{{ post.title }}</h2>
-    <p><small>Publicado em {{ post.created_at|date:"d/m/Y H:i" }}</small></p>
+<div class="imperial-card">
+  <!-- Título e meta -->
+  <h2 class="directive-title" style="margin-bottom: 6px;">
+    {{ post.title }}
+  </h2>
 
-    <div>
-        {{ post.content|safe }}
-    </div>
-</article>
+  <p class="post-detail-meta">
+    Publicado em {{ post.created_at|date:"d/m/Y H:i" }}
+  </p>
 
-<hr>
+  <!-- Categorias -->
+  {% if post.categories.all %}
+  <div class="post-detail-categories">
+    <strong>Categorias:</strong>
+    {% for category in post.categories.all %}
+      <a href="{% url 'category-detail' category.pk %}">
+        {{ category.name }}
+      </a>
+      {% if not forloop.last %} • {% endif %}
+    {% endfor %}
+  </div>
+  {% endif %}
 
-{% if post.categories.all %}
-<section>
-    <h4>Categorias:</h4>
-    <ul>
-        {% for category in post.categories.all %}
-            <li>
-                <a href="{% url 'category-detail' category.pk %}">
-                    {{ category.name }}
-                </a>
-            </li>
-        {% endfor %}
-    </ul>
-</section>
-<hr>
-{% endif %}
+  <hr style="border:none; border-top:1px solid var(--border); margin: 10px 0 14px 0;">
 
-<p>
-    <a href="{% url 'post-update' post.pk %}">Editar</a> |
-    <a href="{% url 'post-delete' post.pk %}">Remover</a> |
-    <a href="{% url 'post-list' %}">Voltar à lista</a>
-</p>
+  <!-- Conteúdo do post -->
+  <div class="post-detail-body">
+    {{ post.content|safe }}
+  </div>
 
-<hr>
+  <!-- Ações no post -->
+  <div style="margin-top: 18px; display:flex; gap:10px; flex-wrap:wrap;">
+    <a href="{% url 'post-update' post.pk %}" class="directive-more-link">
+      Editar ordem
+    </a>
+    <a href="{% url 'post-delete' post.pk %}" class="directive-more-link">
+      Remover ordem
+    </a>
+    <a href="{% url 'post-list' %}" class="directive-more-link">
+      Voltar ao painel
+    </a>
+  </div>
 
-<section>
-    <h3>Comentários</h3>
+  <!-- Comentários -->
+  <section class="comments-section">
+    <h3 style="margin-top: 20px;">
+      Comentários
+    </h3>
 
-    <ul>
+    {% if post.comments.all %}
+      <ul style="list-style:none; padding-left:0; margin-top:10px;">
         {% for comment in post.comments.all %}
-            <li>
-                <p>{{ comment.text }}</p>
-                <small>
-                    por {{ comment.author }} em {{ comment.created_at|date:"d/m/Y H:i" }}
-                </small>
-            </li>
-        {% empty %}
-            <p>Não há comentários ainda.</p>
+        <li class="comment-item">
+          <div class="comment-meta">
+            por {{ comment.author }} em {{ comment.created_at|date:"d/m/Y H:i" }}
+          </div>
+          <div>
+            {{ comment.text }}
+          </div>
+        </li>
         {% endfor %}
-    </ul>
+      </ul>
+    {% else %}
+      <p style="margin-top:10px; font-size:0.85rem; color:var(--muted);">
+        Nenhum comentário registrado nesta ordem.
+      </p>
+    {% endif %}
 
-    <p>
-        <a href="{% url 'comment-create' post.pk %}">Adicionar comentário</a>
-    </p>
-</section>
+    <div style="margin-top: 14px;">
+      <a href="{% url 'comment-create' post.pk %}" class="directive-more-link">
+        + Adicionar comentário
+      </a>
+    </div>
+  </section>
+</div>
 {% endblock %}

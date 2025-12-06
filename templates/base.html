@@ -1,29 +1,67 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>{% block title %}Meu Blog{% endblock %}</title>
-</head>
+  <head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}Painel de Ordens Imperiais{% endblock %}</title>
+    <meta
+      name="description"
+      content="Mural oficial de avisos do Império Galáctico. Comunicados, ordens e tarefas para stormtroopers."
+    />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  </head>
 
-<body>
+  <body>
+    <!-- Linha de brilho no topo -->
+    <div class="imperial-header-line-top"></div>
+
     <header>
-        <h1><a href="{% url 'post-list' %}">Meu Blog</a></h1>
-        <nav>
-            <a href="{% url 'post-list' %}">Posts</a> |
-            <a href="{% url 'post-create' %}">Novo Post</a> |
-            <a href="{% url 'category-list' %}">Categorias</a>
+      <div class="imperial-header">
+        <!-- Logo + título -->
+        <div class="imperial-logo-row">
+          <!-- depois podemos trocar por static -->
+          <img
+            src="{% static 'img/imperial_logo.png' %}"
+            alt="Império Galáctico"
+            class="imperial-logo"
+          />
+
+          <div class="imperial-title">
+            <span class="imperial-title-main">Painel Imperial</span>
+            <span class="imperial-title-sub">Mural dos Stormtroopers</span>
+          </div>
+        </div>
+
+        <!-- Navegação -->
+        <nav class="imperial-nav">
+          <a href="{% url 'post-list' %}">Ordens</a>
+          <a href="{% url 'category-list' %}">Categorias</a>
+          <a href="{% url 'post-create' %}">Nova Ordem</a>
         </nav>
-        <hr>
+
+        <!-- Botão principal -->
+        <button class="btn-primary">
+          <a href="{% url 'post-create' %}">+ Novo Aviso</a>
+        </button>
+      </div>
     </header>
 
-    <main>
-        {% block content %}
-        {% endblock %}
+    <main class="imperial-main">
+      {% block content %}{% endblock %}
     </main>
 
     <footer>
-        <hr>
-        <small>CRUD com Django</small>
+      <div class="imperial-footer">
+        <p>
+          “A força do Império reside na lealdade de seus soldados” —
+          <span style="font-style: italic">Comando Imperial Central</span>
+        </p>
+        <p style="margin-top: 4px; font-size: 0.7rem">
+          Painel de Ordens Imperiais • Acesso Restrito • Ordem 66 não se aplica a
+          stormtroopers, ok?
+        </p>
+      </div>
+      <div class="imperial-footer-line-bottom"></div>
     </footer>
-</body>
+  </body>
 </html>

@@ -1,17 +1,48 @@
 {% extends 'base.html' %}
-{% block title %}Categorias{% endblock %}
+{% block title %}Categorias Imperiais{% endblock %}
 
 {% block content %}
-<h2>Categorias</h2>
-<ul>
+<div class="imperial-card">
+  <h2 class="directive-title" style="margin-bottom: 6px;">
+    Categorias de Ordens Imperiais
+  </h2>
+  <p class="directive-subtitle" style="margin-bottom: 16px;">
+    Agrupamento das ordens por tipo de missão, alerta, protocolo ou treinamento.
+  </p>
+
+  <div class="directive-grid">
     {% for category in categories %}
-        <li>
-            <a href="{% url 'category-detail' category.pk %}">
-                {{ category.name }}
-            </a>
-        </li>
+    <article class="directive-card">
+      <h3 style="margin: 0 0 6px 0;">
+        <a
+          href="{% url 'category-detail' category.pk %}"
+          class="directive-title-link"
+          style="font-size: 1rem;"
+        >
+          {{ category.name }}
+        </a>
+      </h3>
+
+      {% if category.description %}
+      <p class="directive-summary">
+        {{ category.description|truncatechars:180 }}
+      </p>
+      {% else %}
+      <p class="directive-summary">
+        Categoria sem descrição detalhada. Consulte o comando imperial.
+      </p>
+      {% endif %}
+
+      <a
+        href="{% url 'category-detail' category.pk %}"
+        class="directive-more-link"
+      >
+        Ver ordens desta categoria
+      </a>
+    </article>
     {% empty %}
-        <p>Nenhuma categoria cadastrada.</p>
+    <p>Nenhuma categoria cadastrada ainda.</p>
     {% endfor %}
-</ul>
+  </div>
+</div>
 {% endblock %}
