@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}Acesso Imperial{% endblock %}
+
+{% block content %}
+<div class="imperial-card" style="max-width: 420px; margin: 0 auto;">
+  <h2 class="directive-title" style="margin-bottom: 10px;">
+    Autenticação do Comando Imperial
+  </h2>
+  <p class="directive-subtitle" style="margin-bottom: 16px;">
+    Identifique-se para registrar comentários nas ordens.
+  </p>
+
+  {% if form.errors %}
+    <p style="color: #f87171; font-size: 0.85rem; margin-bottom: 10px;">
+      Credenciais inválidas. Verifique seu identificador de trooper e tente novamente.
+    </p>
+  {% endif %}
+
+  <form method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+
+    <div style="margin-bottom: 12px;">
+      <label
+        for="{{ form.username.id_for_label }}"
+        style="display:block; font-size:0.8rem; text-transform:uppercase; letter-spacing:0.16em; margin-bottom:4px;"
+      >
+        Usuário
+      </label>
+      {{ form.username }}
+    </div>
+
+    <div style="margin-bottom: 16px;">
+      <label
+        for="{{ form.password.id_for_label }}"
+        style="display:block; font-size:0.8rem; text-transform:uppercase; letter-spacing:0.16em; margin-bottom:4px;"
+      >
+        Senha
+      </label>
+      {{ form.password }}
+    </div>
+
+    <button type="submit" class="directive-more-link">
+      Entrar
+    </button>
+  </form>
+</div>
+
+<style>
+  input[type="text"],
+  input[type="password"] {
+    width: 100%;
+    background-color: var(--card);
+    border: 1px solid var(--border);
+    color: var(--foreground);
+    padding: 10px;
+    border-radius: var(--radius);
+    font-family: var(--font-body);
+  }
+
+  input[type="text"]:focus,
+  input[type="password"]:focus {
+    outline: none;
+    border-color: hsl(var(--primary));
+    box-shadow: 0 0 10px hsl(var(--primary) / 0.4);
+  }
+</style>
+{% endblock %}

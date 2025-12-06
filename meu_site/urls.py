@@ -21,4 +21,9 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('blog.urls')),  # chamando urls da app
+        # 👇 URLs de autenticação (login/logout/password)
+    path('accounts/', include('django.contrib.auth.urls')),
+
+    # 👇 seu app principal
+    path('', include('blog.urls')),
 ]
