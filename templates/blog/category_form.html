@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Nova Categoria{% endblock %}
+
+{% block content %}
+<div class="imperial-card" style="max-width: 420px; margin: 0 auto;">
+  <h2 class="directive-title" style="margin-bottom: 10px;">
+    Criar Nova Categoria
+  </h2>
+
+  <form method="post">
+    {% csrf_token %}
+
+    {% for field in form %}
+      <div style="margin-bottom: 12px;">
+        <label
+          style="display:block; font-size:0.8rem; text-transform:uppercase; letter-spacing:0.16em; margin-bottom:4px;"
+        >
+          {{ field.label }}
+        </label>
+        {{ field }}
+        {% for error in field.errors %}
+        <div style="color:#f87171; font-size:0.8rem;">
+          {{ error }}
+        </div>
+        {% endfor %}
+      </div>
+    {% endfor %}
+
+    <button type="submit" class="directive-more-link">
+      Salvar Categoria
+    </button>
+    <a href="{% url 'category-list' %}" class="directive-more-link">
+      Cancelar
+    </a>
+  </form>
+</div>
+{% endblock %}

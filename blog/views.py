@@ -1,13 +1,13 @@
 # blog/views.py
 from django.urls import reverse_lazy, reverse
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, CreateView
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.views import View
 from .models import Post, Comment, Category
-from .forms import PostForm, CommentForm
+from .forms import PostForm, CommentForm, CategoryForm
 
 class PostListView(ListView):
     model = Post
@@ -89,3 +89,11 @@ class CategoryDetailView(DetailView):
     model = Category
     template_name = 'blog/category_detail.html'
     context_object_name = 'category'
+
+class CategoryCreateView(CreateView):
+    model = Category
+    form_class = CategoryForm
+    template_name = 'blog/category_form.html'
+
+    def get_success_url(self):
+        return reverse_lazy('category-list')

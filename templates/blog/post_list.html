@@ -9,24 +9,32 @@
 
     <!-- Categorias -->
     <div class="imperial-card" style="margin-bottom: 12px">
-      <h3 class="sidebar-title">Categorias</h3>
-      <ul class="sidebar-category-list">
-        {% for category in categories %}
-        <li class="sidebar-category-item">
-          <a
-            href="{% url 'category-detail' category.pk %}"
-            class="sidebar-category-link"
-          >
-            <span>{{ category.name }}</span>
-          </a>
-        </li>
-        {% empty %}
-        <li class="sidebar-category-item">
-          <span class="sidebar-category-link">Nenhuma categoria cadastrada.</span>
-        </li>
-        {% endfor %}
-      </ul>
+        <h3 class="sidebar-title">Categorias</h3>
+        <ul class="sidebar-category-list">
+            {% for category in categories %}
+            <li class="sidebar-category-item">
+                <a
+                    href="{% url 'category-detail' category.pk %}"
+                    class="sidebar-category-link"
+                >
+                    <span>{{ category.name }}</span>
+                </a>
+            </li>
+            {% empty %}
+            <li class="sidebar-category-item">
+                <span class="sidebar-category-link">Nenhuma categoria cadastrada.</span>
+            </li>
+            {% endfor %}
+        </ul>
+
+        <!-- Botão de criar nova categoria -->
+        <div style="margin-top: 12px; text-align: center;">
+            <a href="{% url 'category-create' %}" class="btn-primary" style="width: 100%; display: inline-block; text-align:center;">
+                Nova Categoria
+            </a>
+        </div>
     </div>
+
 
     <!-- Status da Base -->
     <div class="imperial-card">

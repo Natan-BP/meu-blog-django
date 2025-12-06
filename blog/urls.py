@@ -5,6 +5,7 @@ from .views import (
     comment_create,
     CategoryListView, CategoryDetailView,
     SignUpView,
+    CategoryCreateView,
 )
 
 urlpatterns = [
@@ -16,5 +17,6 @@ urlpatterns = [
     path('post/<int:pk>/comentarios/novo/', comment_create, name='comment-create'),
     path('categorias/', CategoryListView.as_view(), name='category-list'),
     path('categorias/<int:pk>/', CategoryDetailView.as_view(), name='category-detail'),
-     path('accounts/signup/', SignUpView.as_view(), name='signup'),
+    path('accounts/signup/', SignUpView.as_view(), name='signup'),
+    path('categorias/nova/', CategoryCreateView.as_view(), name='category-create'),
 ]
