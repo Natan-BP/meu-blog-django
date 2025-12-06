@@ -3,7 +3,9 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
-
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
+from django.views import View
 from .models import Post, Comment, Category
 from .forms import PostForm, CommentForm
 
@@ -18,6 +20,20 @@ class PostListView(ListView):
         context['categories'] = Category.objects.all()
         return context
 
+class SignUpView(View):
+    def get(self, request):
+        form = UserCreationForm()
+        return render(request, "registration/signup.html", {"form": form})
+
+    def post(self, request):
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            # Se quiser já logar automaticamente:
+            # login(request, user)
+            # return redirect("post-list")
+            return redirect("login")  # manda pro login depois de cadastrar
+        return render(request, "registration/signup.html", {"form": form})
 
 class PostDetailView(DetailView):
     model = Post
@@ -48,7 +64,6 @@ class PostDeleteView(DeleteView):
     success_url = reverse_lazy('post-list')
 
 
-@login_required
 def comment_create(request, pk):
     post = get_object_or_404(Post, pk=pk)
 
@@ -57,17 +72,12 @@ def comment_create(request, pk):
         if form.is_valid():
             comment = form.save(commit=False)
             comment.post = post
-            comment.author = request.user
             comment.save()
             return redirect('post-detail', pk=post.pk)
     else:
         form = CommentForm()
 
-    context = {
-        'post': post,
-        'form': form,
-    }
-    return render(request, 'blog/comment_form.html', context)
+    return render(request, 'blog/comment_form.html', {'form': form, 'post': post})
 
 class CategoryListView(ListView):
     model = Category

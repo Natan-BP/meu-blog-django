@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Cadastro Imperial{% endblock %}
+
+{% block content %}
+<div class="imperial-card" style="max-width: 460px; margin: 0 auto;">
+  <h2 class="directive-title" style="margin-bottom: 10px;">
+    Cadastro de Stormtrooper
+  </h2>
+  <p class="directive-subtitle" style="margin-bottom: 16px;">
+    Crie seu identificador para poder registrar comentários nas ordens imperiais.
+  </p>
+
+  <form method="post">
+    {% csrf_token %}
+
+    {% for field in form %}
+      <div style="margin-bottom: 12px;">
+        <label
+          for="{{ field.id_for_label }}"
+          style="display:block; font-size:0.8rem; text-transform:uppercase; letter-spacing:0.16em; margin-bottom:4px;"
+        >
+          {{ field.label }}
+        </label>
+        {{ field }}
+        {% for error in field.errors %}
+          <div style="color:#f87171; font-size:0.8rem; margin-top:2px;">
+            {{ error }}
+          </div>
+        {% endfor %}
+      </div>
+    {% endfor %}
+
+    <button type="submit" class="directive-more-link">
+      Concluir Cadastro
+    </button>
+  </form>
+</div>
+
+<style>
+  input[type="text"],
+  input[type="password"] {
+    width: 100%;
+    background-color: var(--card);
+    border: 1px solid var(--border);
+    color: var(--foreground);
+    padding: 10px;
+    border-radius: var(--radius);
+    font-family: var(--font-body);
+  }
+
+  input[type="text"]:focus,
+  input[type="password"]:focus {
+    outline: none;
+    border-color: hsl(var(--primary));
+    box-shadow: 0 0 10px hsl(var(--primary) / 0.4);
+  }
+</style>
+{% endblock %}

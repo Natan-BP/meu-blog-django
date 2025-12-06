@@ -14,7 +14,7 @@
   </p>
 
   <!-- Categorias -->
-  {% if post.categories.all %}
+  {% if post.categories.count > 0 %}
   <div class="post-detail-categories">
     <strong>Categorias:</strong>
     {% for category in post.categories.all %}
@@ -52,14 +52,19 @@
       Comentários
     </h3>
 
-    {% if post.comments.all %}
+    {% if post.comments.count > 0 %}
       <ul style="list-style:none; padding-left:0; margin-top:10px;">
         {% for comment in post.comments.all %}
-        <li class="comment-item">
-          <div class="comment-meta">
-            por {{ comment.author }} em {{ comment.created_at|date:"d/m/Y H:i" }}
+        <li class="comment-item" style="margin-bottom:10px;">
+          <div class="comment-meta" style="font-size:0.8rem; color:var(--muted); margin-bottom:4px;">
+            {% if comment.author %}
+              por {{ comment.author }} —
+            {% else %}
+              por Stormtrooper Anônimo —
+            {% endif %}
+            {{ comment.created_at|date:"d/m/Y H:i" }}
           </div>
-          <div>
+          <div style="font-size:0.9rem;">
             {{ comment.text }}
           </div>
         </li>
